@@ -1,37 +1,34 @@
 #include <bits/stdc++.h>
+#define ll long long
+
 using namespace std;
-#define tr(container,it) for(auto it=container.begin();it!=container.end();it++)
-#define all(c) c.begin(),c.end()
+
+void solve(ll* arr, ll N, ll X)
+{
+    map<ll, ll> m1;
+    bool flag = true;
+    for (int i = 0; i < N; i++) {
+        if (flag) {
+            if (m1.find(X - arr[i]) != m1.end()) {
+                cout << (*(m1.find(X - arr[i]))).second
+                    << " " << i + 1;
+                flag = false;
+                break;
+            }
+            m1.insert({ arr[i], i + 1 });
+        }
+    }
+    if (flag)
+        cout << "IMPOSSIBLE";
+}
 int main()
 {
-    int n,sum;
-    cin>>n>>sum;
-    int x;
-    map <int,int> m;
-    for(int i=0;i<n;i++)
+    ll N,X;
+    cin>>N>>X;
+    ll arr[N];
+    for(int i=0;i<N;i++)
     {
-        cin>>x;
-        m[x]=i+1;
+        cin>>arr[i];
     }
-    int flag=0;
-    int temp1,temp2;
-    tr(m,it)
-    {
-        int k=sum-(it->first);
-        temp1=it->first;
-        temp2=it->second;
-        m.erase(it);
-        auto it1= m.find(k);
-        if(it1!=m.end())
-        {
-            cout<<(it->second)<<" "<<(it1->second);
-            flag=1;
-            break;
-        }
-        m[temp1]=temp2;
-    }
-    if(flag==0)
-    {
-        cout<<"IMPOSSIBLE";
-    }
+    solve(arr, N, X);
 }
